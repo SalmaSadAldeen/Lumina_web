@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<!--
+  Lumina — Career Skill Roadmap & Daily Habit Tracker
+  Pure HTML5 + CSS3 · No JavaScript
+  Dark/Light toggle: CSS-only checkbox hack  (#themeToggle)
+  RTL/LTR toggle:   CSS-only checkbox hack  (#langToggle)
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumina — Career &amp; Productivity</title>
+  <meta name="description" content="Lumina Career Skill Roadmap and Daily Productivity & Habit Tracker." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<!--
+  Two hidden checkboxes live at the very top of <body> so their
+  ~ general sibling combinator can reach every element on the page.
+
+  #themeToggle   checked = dark mode
+  #langToggle    checked = Arabic / RTL
+-->
+<body>
+
+<!-- ═══════════ THEME CHECKBOX (dark when checked) ═══════════ -->
+<input type="checkbox" id="themeToggle" class="ctrl-check" aria-label="Toggle dark mode" />
+
+<!-- ═══════════ LANG CHECKBOX (Arabic/RTL when checked) ══════ -->
+<input type="checkbox" id="langToggle" class="ctrl-check" aria-label="Toggle Arabic layout" />
+
+<!-- ═══════════════════════════════════════════════════════════
+     SITE WRAPPER — receives theme & dir classes via CSS sibling
+═══════════════════════════════════════════════════════════════ -->
+<div class="site-wrap">
+
+  <!-- ══════════════════════ NAVBAR ═══════════════════════════ -->
+  <header class="navbar" role="banner">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="#" class="nav-logo" aria-label="Lumina home">
+        <span class="logo-mark" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 30 30" fill="none">
+        <rect width="30" height="30" rx="8" fill="url(#luminaMinimalGrad)"/>
+        <path d="M10 9v12h10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="luminaMinimalGrad" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#7C3AED"/><stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </span>
+        <span class="logo-text">
+          Lumi<span class="logo-accent">na</span>
+        </span>
+      </a>
+
+      <!-- Desktop nav links -->
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#roadmap" class="nav-link">
+          <span class="t-en">Roadmap</span>
+          <span class="t-ar">خارطة المسار</span>
+        </a>
+        <a href="#tracker" class="nav-link">
+          <span class="t-en">Tracker</span>
+          <span class="t-ar">المتتبع</span>
+        </a>
+        <a href="#stats" class="nav-link">
+          <span class="t-en">Stats</span>
+          <span class="t-ar">الإحصاءات</span>
+        </a>
+      </nav>
+
+      <!-- Controls group -->
+      <div class="nav-controls">
+
+    
+
+        <!-- Theme toggle button (CSS checkbox) -->
+        <label for="themeToggle" class="ctrl-btn theme-btn" role="button"
+               tabindex="0" aria-label="Toggle dark / light mode"
+               title="Toggle theme">
+          <!-- Moon icon -->
+          <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <!-- Sun icon -->
+          <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </label>
+
+        <!-- Language toggle button (CSS checkbox) -->
+        <label for="langToggle" class="ctrl-btn lang-btn" role="button"
+               tabindex="0" aria-label="Toggle language English / Arabic"
+               title="Switch language">
+          <span class="t-en">عربي</span>
+          <span class="t-ar">EN</span>
+        </label>
+
+        <!-- Mobile hamburger (CSS-only using :focus-within / adjacent sibling trick) -->
+        <label for="menuToggle" class="hamburger-btn" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </label>
+
+      </div>
+    </div>
+
+    <!-- Mobile menu (CSS :target approach via hidden checkbox) -->
+    <input type="checkbox" id="menuToggle" class="ctrl-check" aria-label="Toggle mobile menu" />
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <a href="#roadmap" class="mobile-link">
+        <span class="t-en">Roadmap</span><span class="t-ar">خارطة المسار</span>
+      </a>
+      <a href="#tracker" class="mobile-link">
+        <span class="t-en">Tracker</span><span class="t-ar">المتتبع</span>
+      </a>
+      <a href="#stats" class="mobile-link">
+        <span class="t-en">Stats</span><span class="t-ar">الإحصاءات</span>
+      </a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+  <!-- ══════════════════════ HERO ══════════════════════════════ -->
+  <section class="hero" aria-labelledby="heroHeading">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="bg-blob bg-blob-1"></div>
+      <div class="bg-blob bg-blob-2"></div>
+      <div class="bg-blob bg-blob-3"></div>
+    </div>
+
+    <div class="container hero-body">
+
+      <div class="hero-pill">
+        <span aria-hidden="true">◈</span>
+        <span class="t-en">Career &amp; Productivity OS</span>
+        <span class="t-ar">نظام المسار المهني والإنتاجية</span>
+      </div>
+
+      <h1 id="heroHeading" class="hero-title">
+        <span class="t-en">Build Your<br><span class="text-purple">Career Path</span></span>
+        <span class="t-ar">ابنِ<br><span class="text-purple">مسارك المهني</span></span>
+      </h1>
+
+      <p class="hero-sub">
+        <span class="t-en">Track skill milestones, build consistent habits, and turn daily momentum into long-term success.</span>
+        <span class="t-ar">تتبّع مراحل المهارات، وابنِ عادات منتظمة، وحوّل زخمك اليومي إلى نجاح طويل الأمد.</span>
+      </p>
+
+      <div class="hero-actions">
+        <a href="#roadmap" class="btn btn-primary btn-lg">
+          <span class="t-en">Explore Roadmap</span>
+          <span class="t-ar">استعرض خارطة المسار</span>
+        </a>
+        <a href="#tracker" class="btn btn-secondary btn-lg">
+          <span class="t-en">View Tracker</span>
+          <span class="t-ar">عرض المتتبع</span>
+        </a>
+      </div>
+
+      <div class="hero-kpis" role="list">
+        <div class="kpi-item" role="listitem">
+          <span class="kpi-num mono">12</span>
+          <span class="kpi-lbl">
+            <span class="t-en">Skills Tracked</span>
+            <span class="t-ar">مهارة مُتابَعة</span>
+          </span>
+        </div>
+        <div class="kpi-sep" aria-hidden="true"></div>
+        <div class="kpi-item" role="listitem">
+          <span class="kpi-num mono">87<span class="kpi-unit">%</span></span>
+          <span class="kpi-lbl">
+            <span class="t-en">Habit Streak</span>
+            <span class="t-ar">تواصل العادة</span>
+          </span>
+        </div>
+        <div class="kpi-sep" aria-hidden="true"></div>
+        <div class="kpi-item" role="listitem">
+          <span class="kpi-num mono">34</span>
+          <span class="kpi-lbl">
+            <span class="t-en">Days Active</span>
+            <span class="t-ar">يوم نشاط</span>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════ CAREER SKILL ROADMAP ══════════════════ -->
+  <section class="section" id="roadmap" aria-labelledby="roadmapHeading">
+    <div class="container">
+
+      <header class="section-header">
+        <p class="section-eyebrow">
+          <span class="t-en">Career Roadmap</span>
+          <span class="t-ar">خارطة المسار المهني</span>
+        </p>
+        <h2 id="roadmapHeading" class="section-title">
+          <span class="t-en">Skill Progression <span class="text-purple">Milestones</span></span>
+          <span class="t-ar">مراحل <span class="text-purple">تطوّر المهارات</span></span>
+        </h2>
+        <p class="section-desc">
+          <span class="t-en">Visualize your learning journey from foundation to mastery. Click a status tag to see how each stage looks.</span>
+          <span class="t-ar">تصوّر رحلتك التعليمية من الأساس إلى الإتقان عبر التخصصات الرئيسية.</span>
+        </p>
+      </header>
+
+      <!-- Filter chips -->
+      <div class="filter-bar" role="group" aria-label="Filter by status">
+        <span class="chip chip-active">
+          <span class="t-en">All Skills</span>
+          <span class="t-ar">كل المهارات</span>
+        </span>
+        <span class="chip chip-success">
+          <span class="t-en">Completed</span>
+          <span class="t-ar">مكتمل</span>
+        </span>
+        <span class="chip chip-warning">
+          <span class="t-en">In Progress</span>
+          <span class="t-ar">قيد التنفيذ</span>
+        </span>
+        <span class="chip chip-default">
+          <span class="t-en">Target</span>
+          <span class="t-ar">هدف</span>
+        </span>
+      </div>
+
+      <!-- Roadmap timeline -->
+      <div class="roadmap-timeline" role="list" aria-label="Skill milestones">
+
+        <!-- ── Node 1 — Completed ── -->
+        <article class="roadmap-node node-done" role="listitem">
+          <div class="node-connector" aria-hidden="true">
+            <div class="node-dot"></div>
+            <div class="node-track"></div>
+          </div>
+          <div class="node-card glass-card">
+            <div class="node-card-top">
+              <div class="node-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <div class="node-meta">
+                <span class="node-phase mono">Phase 01</span>
+                <span class="status-chip chip-success" role="status">
+                  <span class="t-en">✓ Completed</span>
+                  <span class="t-ar">✓ مكتمل</span>
+                </span>
+              </div>
+            </div>
+            <h3 class="node-title">
+              <span class="t-en">HTML &amp; CSS Foundations</span>
+              <span class="t-ar">أسس HTML وCSS</span>
+            </h3>
+            <p class="node-desc">
+              <span class="t-en">Semantic markup, accessibility, Flexbox, Grid, and responsive design principles.</span>
+              <span class="t-ar">الترميز الدلالي، إمكانية الوصول، Flexbox، Grid، ومبادئ التصميم المتجاوب.</span>
+            </p>
+            <div class="skill-tags" aria-label="Skills">
+              <span class="skill-tag">Semantic HTML</span>
+              <span class="skill-tag">CSS Grid</span>
+              <span class="skill-tag">Flexbox</span>
+              <span class="skill-tag">Responsive</span>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-row">
+                <span class="prog-label">
+                  <span class="t-en">Proficiency</span>
+                  <span class="t-ar">الكفاءة</span>
+                </span>
+                <span class="prog-val mono">100%</span>
+              </div>
+              <div class="prog-track" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                <div class="prog-fill" style="--pct:100%"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Node 2 — Completed ── -->
+        <article class="roadmap-node node-done" role="listitem">
+          <div class="node-connector" aria-hidden="true">
+            <div class="node-dot"></div>
+            <div class="node-track"></div>
+          </div>
+          <div class="node-card glass-card">
+            <div class="node-card-top">
+              <div class="node-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              </div>
+              <div class="node-meta">
+                <span class="node-phase mono">Phase 02</span>
+                <span class="status-chip chip-success" role="status">
+                  <span class="t-en">✓ Completed</span>
+                  <span class="t-ar">✓ مكتمل</span>
+                </span>
+              </div>
+            </div>
+            <h3 class="node-title">
+              <span class="t-en">JavaScript Essentials</span>
+              <span class="t-ar">أساسيات JavaScript</span>
+            </h3>
+            <p class="node-desc">
+              <span class="t-en">ES6+, async/await, DOM manipulation, event-driven programming, and browser APIs.</span>
+              <span class="t-ar">ES6+، async/await، التحكم في DOM، البرمجة المدفوعة بالأحداث.</span>
+            </p>
+            <div class="skill-tags">
+              <span class="skill-tag">ES6+</span>
+              <span class="skill-tag">Async/Await</span>
+              <span class="skill-tag">DOM API</span>
+              <span class="skill-tag">Promises</span>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-row">
+                <span class="prog-label">
+                  <span class="t-en">Proficiency</span><span class="t-ar">الكفاءة</span>
+                </span>
+                <span class="prog-val mono">92%</span>
+              </div>
+              <div class="prog-track" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">
+                <div class="prog-fill" style="--pct:92%"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Node 3 — In Progress (featured) ── -->
+        <article class="roadmap-node node-prog featured-node" role="listitem">
+          <div class="node-connector" aria-hidden="true">
+            <div class="node-dot node-dot-pulse"></div>
+            <div class="node-track"></div>
+          </div>
+          <div class="node-card glass-card">
+            <div class="node-card-top">
+              <div class="node-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <div class="node-meta">
+                <span class="node-phase mono">Phase 03</span>
+                <span class="status-chip chip-warning" role="status">
+                  <span class="t-en">⟳ In Progress</span>
+                  <span class="t-ar">⟳ قيد التنفيذ</span>
+                </span>
+              </div>
+            </div>
+            <h3 class="node-title">
+              <span class="t-en">React &amp; State Management</span>
+              <span class="t-ar">React وإدارة الحالة</span>
+            </h3>
+            <p class="node-desc">
+              <span class="t-en">Component architecture, hooks, Context API, Redux Toolkit, and performance optimisation patterns.</span>
+              <span class="t-ar">بنية المكوّنات، Hooks، Context API، Redux Toolkit، وأنماط تحسين الأداء.</span>
+            </p>
+            <div class="skill-tags">
+              <span class="skill-tag">React 18</span>
+              <span class="skill-tag">Hooks</span>
+              <span class="skill-tag">Redux Toolkit</span>
+              <span class="skill-tag">Context API</span>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-row">
+                <span class="prog-label">
+                  <span class="t-en">Proficiency</span><span class="t-ar">الكفاءة</span>
+                </span>
+                <span class="prog-val mono">68%</span>
+              </div>
+              <div class="prog-track" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
+                <div class="prog-fill" style="--pct:68%"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Node 4 — In Progress ── -->
+        <article class="roadmap-node node-prog" role="listitem">
+          <div class="node-connector" aria-hidden="true">
+            <div class="node-dot node-dot-pulse"></div>
+            <div class="node-track"></div>
+          </div>
+          <div class="node-card glass-card">
+            <div class="node-card-top">
+              <div class="node-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              </div>
+              <div class="node-meta">
+                <span class="node-phase mono">Phase 04</span>
+                <span class="status-chip chip-warning" role="status">
+                  <span class="t-en">⟳ In Progress</span>
+                  <span class="t-ar">⟳ قيد التنفيذ</span>
+                </span>
+              </div>
+            </div>
+            <h3 class="node-title">
+              <span class="t-en">Node.js &amp; Backend APIs</span>
+              <span class="t-ar">Node.js وواجهات الخلفية</span>
+            </h3>
+            <p class="node-desc">
+              <span class="t-en">RESTful API design, Express.js, JWT authentication, and database integration.</span>
+              <span class="t-ar">تصميم RESTful API، Express.js، مصادقة JWT، وتكامل قواعد البيانات.</span>
+            </p>
+            <div class="skill-tags">
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Express</span>
+              <span class="skill-tag">REST API</span>
+              <span class="skill-tag">JWT Auth</span>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-row">
+                <span class="prog-label">
+                  <span class="t-en">Proficiency</span><span class="t-ar">الكفاءة</span>
+                </span>
+                <span class="prog-val mono">45%</span>
+              </div>
+              <div class="prog-track" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
+                <div class="prog-fill" style="--pct:45%"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Node 5 — Target ── -->
+        <article class="roadmap-node node-target" role="listitem">
+          <div class="node-connector" aria-hidden="true">
+            <div class="node-dot"></div>
+            <div class="node-track"></div>
+          </div>
+          <div class="node-card glass-card">
+            <div class="node-card-top">
+              <div class="node-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+              </div>
+              <div class="node-meta">
+                <span class="node-phase mono">Phase 05</span>
+                <span class="status-chip chip-default" role="status">
+                  <span class="t-en">◎ Target</span>
+                  <span class="t-ar">◎ هدف</span>
+                </span>
+              </div>
+            </div>
+            <h3 class="node-title">
+              <span class="t-en">Cloud &amp; DevOps</span>
+              <span class="t-ar">الحوسبة السحابية وDevOps</span>
+            </h3>
+            <p class="node-desc">
+              <span class="t-en">AWS fundamentals, CI/CD pipelines, Docker containerisation, and Kubernetes orchestration.</span>
+              <span class="t-ar">أساسيات AWS، مسارات CI/CD، حاويات Docker، وتنسيق Kubernetes.</span>
+            </p>
+            <div class="skill-tags">
+              <span class="skill-tag">AWS</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">CI/CD</span>
+              <span class="skill-tag">Kubernetes</span>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-row">
+                <span class="prog-label">
+                  <span class="t-en">Proficiency</span><span class="t-ar">الكفاءة</span>
+                </span>
+                <span class="prog-val mono">12%</span>
+              </div>
+              <div class="prog-track" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">
+                <div class="prog-fill" style="--pct:12%"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Node 6 — Target ── -->
+        <article class="roadmap-node node-target" role="listitem">
+          <div class="node-connector" aria-hidden="true">
+            <div class="node-dot"></div>
+          </div>
+          <div class="node-card glass-card">
+            <div class="node-card-top">
+              <div class="node-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+              </div>
+              <div class="node-meta">
+                <span class="node-phase mono">Phase 06</span>
+                <span class="status-chip chip-default" role="status">
+                  <span class="t-en">◎ Target</span>
+                  <span class="t-ar">◎ هدف</span>
+                </span>
+              </div>
+            </div>
+            <h3 class="node-title">
+              <span class="t-en">System Design &amp; Architecture</span>
+              <span class="t-ar">تصميم الأنظمة والبنية المعمارية</span>
+            </h3>
+            <p class="node-desc">
+              <span class="t-en">Scalable architectures, microservices, caching, load balancing, and distributed systems.</span>
+              <span class="t-ar">البنى القابلة للتوسع، الخدمات المصغّرة، التخزين المؤقت، وموازنة التحميل.</span>
+            </p>
+            <div class="skill-tags">
+              <span class="skill-tag">Microservices</span>
+              <span class="skill-tag">Caching</span>
+              <span class="skill-tag">Scalability</span>
+              <span class="skill-tag">Distributed</span>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-row">
+                <span class="prog-label">
+                  <span class="t-en">Proficiency</span><span class="t-ar">الكفاءة</span>
+                </span>
+                <span class="prog-val mono">0%</span>
+              </div>
+              <div class="prog-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="prog-fill" style="--pct:0%"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /roadmap-timeline -->
+    </div>
+  </section>
+
+  <!-- ════════════════ DAILY PRODUCTIVITY TRACKER ═══════════════ -->
+  <section class="section section-alt" id="tracker" aria-labelledby="trackerHeading">
+    <div class="container">
+
+      <header class="section-header">
+        <p class="section-eyebrow">
+          <span class="t-en">Habit Tracker</span>
+          <span class="t-ar">متتبع العادات</span>
+        </p>
+        <h2 id="trackerHeading" class="section-title">
+          <span class="t-en">Daily Productivity <span class="text-purple">Dashboard</span></span>
+          <span class="t-ar">لوحة الإنتاجية <span class="text-purple">اليومية</span></span>
+        </h2>
+        <p class="section-desc">
+          <span class="t-en">Build consistent habits and track your focus time to maximise productive output every day.</span>
+          <span class="t-ar">ابنِ عادات منتظمة وتتبّع وقت تركيزك لتعظيم إنتاجيتك كل يوم.</span>
+        </p>
+      </header>
+
+      <!-- Metric cards -->
+      <div class="metrics-grid" id="stats" role="list" aria-label="Productivity metrics">
+
+        <article class="metric-card glass-card" role="listitem">
+          <div class="metric-icon icon-purple" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-val mono">6h 40m</span>
+            <span class="metric-lbl">
+              <span class="t-en">Daily Focus</span>
+              <span class="t-ar">التركيز اليومي</span>
+            </span>
+          </div>
+          <span class="metric-badge badge-success">↑ 12%</span>
+        </article>
+
+        <article class="metric-card glass-card" role="listitem">
+          <div class="metric-icon icon-green" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-val mono">9 <span class="metric-sub">/ 12</span></span>
+            <span class="metric-lbl">
+              <span class="t-en">Tasks Done</span>
+              <span class="t-ar">المهام المنجزة</span>
+            </span>
+          </div>
+          <span class="metric-badge badge-success">+3</span>
+        </article>
+
+        <article class="metric-card glass-card" role="listitem">
+          <div class="metric-icon icon-warning" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-val mono">34 <span class="metric-sub">
+              <span class="t-en">days</span><span class="t-ar">يوم</span>
+            </span></span>
+            <span class="metric-lbl">
+              <span class="t-en">Habit Streak</span>
+              <span class="t-ar">تواصل العادة</span>
+            </span>
+          </div>
+          <span class="metric-badge badge-warning">
+            <span class="t-en">Best</span><span class="t-ar">الأفضل</span>
+          </span>
+        </article>
+
+        <article class="metric-card glass-card" role="listitem">
+          <div class="metric-icon icon-error" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-val mono">78<span class="metric-sub">%</span></span>
+            <span class="metric-lbl">
+              <span class="t-en">Energy Level</span>
+              <span class="t-ar">مستوى الطاقة</span>
+            </span>
+          </div>
+          <span class="metric-badge badge-error">↓ 5%</span>
+        </article>
+
+      </div><!-- /metrics-grid -->
+
+      <!-- Tracker main body -->
+      <div class="tracker-body">
+
+        <!-- ── Habit checklist ── -->
+        <section class="habit-panel glass-card" aria-labelledby="habitHeading">
+          <div class="panel-hdr">
+            <h3 id="habitHeading" class="panel-title">
+              <span class="t-en">Today's Habits</span>
+              <span class="t-ar">عادات اليوم</span>
+            </h3>
+            <span class="panel-count mono">7 / 9</span>
+          </div>
+
+          <p class="habit-date">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span class="t-en">Sunday, Sep 20 · Week 38</span>
+            <span class="t-ar">الأحد، ٢٠ سبتمبر · الأسبوع ٣٨</span>
+          </p>
+
+          <!--
+            Pure CSS checkboxes for habit toggling.
+            Each habit uses a hidden <input type="checkbox"> +
+            a <label> so :checked state drives the strikethrough styling.
+          -->
+          <ul class="habit-list" role="list" aria-label="Daily habits">
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h1" class="habit-check" checked />
+              <label for="h1" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Morning Meditation</span>
+                    <span class="t-ar">التأمل الصباحي</span>
+                  </span>
+                  <span class="habit-streak mono">🔥 12 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">07:00</span>
+              </label>
+            </li>
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h2" class="habit-check" checked />
+              <label for="h2" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Deep Work Session</span>
+                    <span class="t-ar">جلسة العمل المعمّق</span>
+                  </span>
+                  <span class="habit-streak mono">🔥 34 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">09:00</span>
+              </label>
+            </li>
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h3" class="habit-check" checked />
+              <label for="h3" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Read 30 Minutes</span>
+                    <span class="t-ar">القراءة ٣٠ دقيقة</span>
+                  </span>
+                  <span class="habit-streak mono">🔥 21 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">11:30</span>
+              </label>
+            </li>
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h4" class="habit-check" checked />
+              <label for="h4" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Exercise</span>
+                    <span class="t-ar">التمرين الرياضي</span>
+                  </span>
+                  <span class="habit-streak mono">🔥 8 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">13:00</span>
+              </label>
+            </li>
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h5" class="habit-check" checked />
+              <label for="h5" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Code Review</span>
+                    <span class="t-ar">مراجعة الكود</span>
+                  </span>
+                  <span class="habit-streak mono">🔥 5 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">15:00</span>
+              </label>
+            </li>
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h6" class="habit-check" checked />
+              <label for="h6" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Journal Entry</span>
+                    <span class="t-ar">تدوين اليوميات</span>
+                  </span>
+                  <span class="habit-streak mono">🔥 19 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">17:00</span>
+              </label>
+            </li>
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h7" class="habit-check" checked />
+              <label for="h7" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Drink 2L Water</span>
+                    <span class="t-ar">شرب ٢ لتر ماء</span>
+                  </span>
+                  <span class="habit-streak mono">🔥 7 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">
+                  <span class="t-en">All day</span><span class="t-ar">طوال اليوم</span>
+                </span>
+              </label>
+            </li>
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h8" class="habit-check" />
+              <label for="h8" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Evening Walk</span>
+                    <span class="t-ar">المشي المسائي</span>
+                  </span>
+                  <span class="habit-streak mono">3 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">19:00</span>
+              </label>
+            </li>
+
+            <li class="habit-item" role="listitem">
+              <input type="checkbox" id="h9" class="habit-check" />
+              <label for="h9" class="habit-label">
+                <span class="habit-box" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="1.5 6 4.5 9 10.5 3"/></svg>
+                </span>
+                <span class="habit-info">
+                  <span class="habit-name">
+                    <span class="t-en">Wind-Down Routine</span>
+                    <span class="t-ar">روتين الاسترخاء</span>
+                  </span>
+                  <span class="habit-streak mono">6 <span class="t-en">day streak</span><span class="t-ar">يوم متتالي</span></span>
+                </span>
+                <span class="habit-time mono">22:00</span>
+              </label>
+            </li>
+
+          </ul><!-- /habit-list -->
+
+          <!-- Overall progress bar (CSS-only — fixed at 78% as data display) -->
+          <div class="habit-progress">
+            <div class="hp-track">
+              <div class="hp-fill" style="--pct:78%"></div>
+            </div>
+            <span class="hp-label mono">
+              78% <span class="t-en">complete</span><span class="t-ar">مكتمل</span>
+            </span>
+          </div>
+
+        </section><!-- /habit-panel -->
+
+        <!-- ── Side panels ── -->
+        <aside class="tracker-side">
+
+          <!-- Focus sessions -->
+          <section class="side-panel glass-card" aria-labelledby="focusHeading">
+            <div class="panel-hdr">
+              <h3 id="focusHeading" class="panel-title">
+                <span class="t-en">Focus Sessions</span>
+                <span class="t-ar">جلسات التركيز</span>
+              </h3>
+              <span class="chip chip-success chip-sm">
+                <span class="t-en">Today</span><span class="t-ar">اليوم</span>
+              </span>
+            </div>
+
+            <div class="focus-total">
+              <span class="focus-time mono">6<span class="fu">h</span> 40<span class="fu">m</span></span>
+              <span class="focus-sub">
+                <span class="t-en">Total focus today</span>
+                <span class="t-ar">إجمالي التركيز اليوم</span>
+              </span>
+            </div>
+
+            <div class="focus-list">
+              <div class="focus-row">
+                <div class="focus-info">
+                  <span class="focus-name">
+                    <span class="t-en">React Hooks Deep Dive</span>
+                    <span class="t-ar">تعمّق في React Hooks</span>
+                  </span>
+                  <span class="focus-hrs mono">09:00–11:20</span>
+                </div>
+                <div class="focus-bar-row">
+                  <div class="focus-track">
+                    <div class="focus-fill focus-fill-purple" style="--fw:80%"></div>
+                  </div>
+                  <span class="focus-dur mono">2h 20m</span>
+                </div>
+              </div>
+
+              <div class="focus-row">
+                <div class="focus-info">
+                  <span class="focus-name">
+                    <span class="t-en">API Integration</span>
+                    <span class="t-ar">تكامل الواجهة البرمجية</span>
+                  </span>
+                  <span class="focus-hrs mono">13:00–14:30</span>
+                </div>
+                <div class="focus-bar-row">
+                  <div class="focus-track">
+                    <div class="focus-fill focus-fill-green" style="--fw:52%"></div>
+                  </div>
+                  <span class="focus-dur mono">1h 30m</span>
+                </div>
+              </div>
+
+              <div class="focus-row">
+                <div class="focus-info">
+                  <span class="focus-name">
+                    <span class="t-en">System Design Study</span>
+                    <span class="t-ar">دراسة تصميم الأنظمة</span>
+                  </span>
+                  <span class="focus-hrs mono">16:00–18:30</span>
+                </div>
+                <div class="focus-bar-row">
+                  <div class="focus-track">
+                    <div class="focus-fill focus-fill-warning" style="--fw:97%"></div>
+                  </div>
+                  <span class="focus-dur mono">2h 50m</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Weekly overview -->
+          <section class="side-panel glass-card" aria-labelledby="weeklyHeading">
+            <div class="panel-hdr">
+              <h3 id="weeklyHeading" class="panel-title">
+                <span class="t-en">Weekly Overview</span>
+                <span class="t-ar">نظرة أسبوعية</span>
+              </h3>
+              <span class="chip chip-default chip-sm">
+                <span class="t-en">Week 38</span><span class="t-ar">الأسبوع ٣٨</span>
+              </span>
+            </div>
+
+            <div class="week-chart" role="list" aria-label="Daily productivity scores">
+              <div class="day-bar-col" role="listitem">
+                <div class="day-bar"><div class="day-bar-fill" style="--dh:75%"></div></div>
+                <span class="day-lbl"><span class="t-en">Mon</span><span class="t-ar">إث</span></span>
+              </div>
+              <div class="day-bar-col" role="listitem">
+                <div class="day-bar"><div class="day-bar-fill" style="--dh:88%"></div></div>
+                <span class="day-lbl"><span class="t-en">Tue</span><span class="t-ar">ثل</span></span>
+              </div>
+              <div class="day-bar-col" role="listitem">
+                <div class="day-bar"><div class="day-bar-fill" style="--dh:60%"></div></div>
+                <span class="day-lbl"><span class="t-en">Wed</span><span class="t-ar">أر</span></span>
+              </div>
+              <div class="day-bar-col hi-day" role="listitem">
+                <div class="day-bar"><div class="day-bar-fill day-fill-hi" style="--dh:95%"></div></div>
+                <span class="day-lbl"><span class="t-en">Thu</span><span class="t-ar">خم</span></span>
+              </div>
+              <div class="day-bar-col" role="listitem">
+                <div class="day-bar"><div class="day-bar-fill" style="--dh:80%"></div></div>
+                <span class="day-lbl"><span class="t-en">Fri</span><span class="t-ar">جم</span></span>
+              </div>
+              <div class="day-bar-col" role="listitem">
+                <div class="day-bar"><div class="day-bar-fill" style="--dh:50%"></div></div>
+                <span class="day-lbl"><span class="t-en">Sat</span><span class="t-ar">سب</span></span>
+              </div>
+              <div class="day-bar-col today-col" role="listitem">
+                <div class="day-bar"><div class="day-bar-fill day-fill-today" style="--dh:78%"></div></div>
+                <span class="day-lbl today-lbl"><span class="t-en">Sun</span><span class="t-ar">أح</span></span>
+              </div>
+            </div>
+
+            <div class="week-avg">
+              <span class="t-en">Weekly Average</span>
+              <span class="t-ar">المعدل الأسبوعي</span>
+              <span class="mono" style="color:var(--c-primary)">75%</span>
+            </div>
+          </section>
+
+        </aside><!-- /tracker-side -->
+      </div><!-- /tracker-body -->
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ════════════════════════ FOOTER ═════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+<div class="footer-brand">
+  <a href="#" class="nav-logo" aria-label="Lumina home">
+    <span class="logo-mark" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 30 30" fill="none">
+        <rect width="30" height="30" rx="8" fill="url(#luminaMinimalGrad)"/>
+        <path d="M10 9v12h10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="luminaMinimalGrad" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#7C3AED"/><stop offset="1" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </span>
+    <span class="logo-text">Lumi<span class="logo-accent" style="color: #7C3AED;">na</span></span>
+  </a>
+  <p class="footer-tagline">
+    <span class="t-en">Your personal growth and daily productivity, unified.</span>
+    <span class="t-ar">تطورك الشخصي وإنتاجيتك اليومية في مكان واحد.</span>
+  </p>
+</div>
+
+      <nav class="footer-links" aria-label="Footer navigation">
+        <ul>
+          <li><a href="#roadmap" class="footer-link"><span class="t-en">Roadmap</span><span class="t-ar">خارطة المسار</span></a></li>
+          <li><a href="#tracker" class="footer-link"><span class="t-en">Tracker</span><span class="t-ar">المتتبع</span></a></li>
+          <li><a href="#stats"   class="footer-link"><span class="t-en">Stats</span><span class="t-ar">الإحصاءات</span></a></li>
+        </ul>
+      </nav>
+
+      <p class="footer-copy mono">
+        <span class="t-en">© 2026 Lumina. Pure HTML &amp; CSS.</span>
+        <span class="t-ar">© ٢٠٢٦ Lumina. HTML وCSS خالص.</span>
+      </p>
+
+    </div>
+  </footer>
+
+</div><!-- /site-wrap -->
+</body>
+</html>
+
